@@ -1,7 +1,7 @@
 ###############################################################################
 # 2017-12-14
 # Tests functions for use with ggplot2
-#'
+#
 ###############################################################################
 
 data <- data.frame(
@@ -9,7 +9,13 @@ data <- data.frame(
   y = -2:1
 )
 
-p <- ggplot(data, aes(x = x, y = y)) + geom_point()
+#' @importFrom   ggplot2       aes   geom_point   ggplot
+#'
+p <- ggplot2::ggplot(
+  data,
+  ggplot2::aes(x = x, y = y)
+) +
+  ggplot2::geom_point()
 
 ###############################################################################
 

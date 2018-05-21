@@ -4,22 +4,31 @@
 #'
 ###############################################################################
 
+#' Returns a function that can be used to get the x- or y-axes from a ggplot
+#'
 .build_ggplot_coord_range_getter <- function(axis) {
   function(p) {
     ggplot2::layer_scales(p)[[axis]]$range$range
   }
 }
+
 .get_ggplot_x_range <- .build_ggplot_coord_range_getter("x")
 .get_ggplot_y_range <- .build_ggplot_coord_range_getter("y")
 
 ###############################################################################
 
+#' Function that returns the symmetrised range of a vector of numeric values
+#'
 .get_sym_range <- function(x) {
   c(-1, 1) * max(abs(x))
 }
 
 ###############################################################################
 
+#' Function that can be used to construct the Stat[X|Y]LimSym classes
+#'
+#' @importFrom   ggplot2       ggproto   Stat
+#'
 .sym_lim_class_factory <- function(class_name, x_mutator, y_mutator) {
   ggplot2::ggproto(
     class_name,
@@ -39,8 +48,6 @@
 #' Stat-class that defines y-limits to be symmetrical with-respect to the line
 #' y=0
 #'
-#' @importFrom   ggplot2       ggproto   Stat
-#'
 StatSymYLim <- .sym_lim_class_factory(
   "StatSymYLim",
   x_mutator = median,
@@ -50,7 +57,6 @@ StatSymYLim <- .sym_lim_class_factory(
 #' Stat-class that defines x-limits to be symmetrical with-respect to the line
 #' x=0
 #'
-#' @importFrom   ggplot2       ggproto   Stat
 #'
 StatSymXLim <- .sym_lim_class_factory(
   "StatSymXLim",
